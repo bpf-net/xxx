@@ -11,13 +11,11 @@ permissions:
 jobs:
   commit-hash:
     runs-on: ubuntu-24.04
-    outputs:
-      commit_hash: ${{ steps.get_commit.outputs.commit_hash }}
     steps:
       - uses: actions/checkout@v4
       - name: Get commit hash
         id: get_commit
-        run: echo "::set-output name=commit_hash::$(git rev-parse HEAD)"
+        run: echo "commit_hash=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
 
   build-and-test:
     runs-on: ubuntu-24.04
@@ -56,12 +54,17 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ghcr.io/${{ github.repository }}:${{ needs.commit-hash.outputs.commit_hash }}
+      - name: echo result
+        env:
+          commit_hash: ${{ steps.get_commit.outputs.commit_hash }}
+        run: echo "The commit hash is $commit_hash"
+
+      # - name: Build and push Docker image
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     context: .
+      #     push: true
+      #     tags: ghcr.io/${{ github.repository }}:${{ steps.get_commit.outputs.commit_hash }}
 
   # deploy:
   #   runs-on: ubuntu-24.04
