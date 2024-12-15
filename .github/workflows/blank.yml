@@ -11,6 +11,8 @@ permissions:
 jobs:
   commit-hash:
     runs-on: ubuntu-24.04
+    outputs:
+      handle: ${{ steps.get_commit.outputs.commit_hash }}
     steps:
       - uses: actions/checkout@v4
       - name: Get commit hash
