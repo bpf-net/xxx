@@ -65,7 +65,7 @@ jobs:
         with:
           package-name: 'xxx'
           min-versions-to-keep: 2
-          package-type: 'docker'
+          package-type: 'container'
 
   # deploy:
   #   runs-on: ubuntu-24.04
