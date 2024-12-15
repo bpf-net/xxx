@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   commit-hash:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       commit_hash: ${{ steps.get_commit.outputs.commit_hash }}
     steps:
@@ -20,7 +20,7 @@ jobs:
         run: echo "::set-output name=commit_hash::$(git rev-parse HEAD)"
 
   build-and-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node.js
@@ -38,7 +38,7 @@ jobs:
     needs:
       - build-and-test
       - commit-hash
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -64,7 +64,7 @@ jobs:
           tags: ghcr.io/${{ github.repository }}:${{ needs.commit-hash.outputs.commit_hash }}
 
   # deploy:
-  #   runs-on: ubuntu-latest
+  #   runs-on: ubuntu-24.04
   #   needs:
   #     - build-and-push-image
   #     - commit-hash
