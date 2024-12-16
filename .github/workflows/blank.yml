@@ -53,31 +53,29 @@ jobs:
 
     runs-on: ubuntu-24.04
     steps:
-#      - name: Log in to Container registry
-#        uses: docker/login-action@v3
-#        with:
-#          registry: https://ghcr.io
-#          username: ${{ github.actor }}
-#          password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Remove old Docker images
         uses: actions/delete-package-versions@v5
         with:
           package-name: xxx
-          min-versions-to-keep: 2
+          min-versions-to-keep: 3
           package-type: container
 
-  # deploy:
-  #   runs-on: ubuntu-24.04
-  #   needs:
-  #     - build-and-push-image
-  #     - commit-hash
+  deploy-to-server:
+    runs-on: ubuntu-24.04
+    needs:
+      - build-and-push-image
 
-  #   steps:
-  #   - name: Checkout code
-  #     uses: actions/checkout@v2
-  #   - name: create env file
-  #     run: |
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: success
+        run: |
+          echo "it was a triumph!"
+          echo "I'm making a note here 'huge success'
+          echo "it\'s hard to overstate my satisfaction"
+
+  #     - name: create env file
+  #       run: |
   #       echo "GIT_COMMIT_HASH=${{ github.sha }}" >> env
   #   - name: 'Docker Stack Deploy'
   #     uses: cssnr/stack-deploy-action@v1
