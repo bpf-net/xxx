@@ -63,7 +63,8 @@ jobs:
       - name: Remove old Docker images
         uses: actions/delete-package-versions@v5
         with:
-          package-name: '${{ github.repository }}/xxx'
+          package-name: 'xxx'
+          owner: 'bpf-net'
           min-versions-to-keep: 2
           package-type: 'container'
 
