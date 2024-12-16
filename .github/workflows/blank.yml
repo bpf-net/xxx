@@ -63,7 +63,7 @@ jobs:
       - name: Remove old Docker images
         uses: actions/delete-package-versions@v5
         with:
-          package-name: 'xxx'
+          package-name: '${{ github.repository }}/xxx'
           min-versions-to-keep: 2
           package-type: 'container'
 
